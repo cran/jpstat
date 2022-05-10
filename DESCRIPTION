@@ -1,12 +1,13 @@
 Package: jpstat
 Type: Package
 Title: Tools for Easy Use of 'e-Stat' API
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: person("Mizuki", "Uchida", email = "uchidamizuki@vivaldi.net", role = c("aut", "cre"))
 Description: Provides tools for using the API of 'e-Stat' (<https://www.e-stat.go.jp/>), a portal site for Japanese government statistics.
     Includes functions for automatic query generation, data collection and formatting.
 License: MIT + file LICENSE
-URL: https://github.com/UchidaMizuki/jpstat
+URL: https://github.com/UchidaMizuki/jpstat,
+        https://uchidamizuki.github.io/jpstat/
 BugReports: https://github.com/UchidaMizuki/jpstat/issues
 Encoding: UTF-8
 Suggests: keyring (>= 1.2.0), testthat (>= 3.0.0)
@@ -18,8 +19,8 @@ Imports: dplyr (>= 0.8.0), httr, pillar, progress, purrr (>= 0.3.0),
         (>= 0.1.1)
 Depends: R (>= 2.10)
 NeedsCompilation: no
-Packaged: 2022-02-23 04:19:50 UTC; Mizuki
+Packaged: 2022-05-10 12:45:54 UTC; S71458
 Author: Mizuki Uchida [aut, cre]
 Maintainer: Mizuki Uchida <uchidamizuki@vivaldi.net>
 Repository: CRAN
-Date/Publication: 2022-02-24 09:30:06 UTC
+Date/Publication: 2022-05-10 13:00:02 UTC
