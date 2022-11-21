@@ -14,44 +14,64 @@ commas <- function(...) {
          collapse = ", ")
 }
 
+commas0 <- function(...) {
+  paste0(...,
+         collapse = ",")
+}
+
 compact_query <- function(...) {
-  x <- rlang::list2(...) %>%
+  dots_list(...,
+            .named = TRUE,
+            .homonyms = "first") |>
     purrr::compact()
-
-  stopifnot(is_named(x))
-
-  x[vctrs::vec_unique_loc(names(x))]
-}
-
-remove_class <- function(x, class) {
-  class(x) <- setdiff(class(x), class)
-  x
-}
-
-add_class <- function(x, class) {
-  class(x) <- c(class, class(x))
-  x
 }
 
 str_to_snakecase <- function(string) {
-  string %>%
-    stringr::str_split("(?=[[:upper:]])") %>%
+  string |>
+    stringr::str_split("(?=[[:upper:]])") |>
     purrr::map_chr(function(string) {
-      string %>%
-        stringr::str_to_lower() %>%
+      string |>
+        stringr::str_to_lower() |>
         stringr::str_c(collapse = "_")
-    }) %>%
+    }) |>
     stringr::str_remove("^_")
 }
 
+str_to_camelcase <- function(string) {
+  string |>
+    stringr::str_split("_") |>
+    purrr::map_chr(~ {
+      exec(paste0, .x[[1L]], !!!stringr::str_to_sentence(.x[-1L]),
+           collapse = "")
+    })
+}
+
+get_content <- function(url = NULL, config = list(), ..., handle = NULL) {
+  out <- httr::GET(url = url,
+                   config = config, ...,
+                   handle = handle)
+  httr::stop_for_status(out)
+  httr::content(out)
+}
+
+
+
+# Pref and city codes -----------------------------------------------------
+
 as_pref_code <- function(x) {
-  x %>%
+  x |>
     stringr::str_pad(2L,
                      pad = "0")
 }
 
 as_city_code <- function(x) {
-  x %>%
+  x |>
     stringr::str_pad(5L,
                      pad = "0")
 }
+
+
+
+# Progress bar ------------------------------------------------------------
+
+format_downloading <- "downloading [:bar] :percent"
