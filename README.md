@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# jpstat
+# jpstat <a href="https://uchidamizuki.github.io/jpstat/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -111,7 +111,8 @@ RESAS APIの利用にはアカウント登録 (X-API-KEYと呼ばれるAPIキー
 が必要です
 (詳しくは[ホームページ](https://opendata.resas-portal.go.jp)を参照してください)．
 RESAS
-APIの利用にあたっては，[API詳細仕様](https://opendata.resas-portal.go.jp/docs/api/v1/detail/index.html)を事前に確認してください．
+APIの利用にあたっては，[利用規約](https://opendata.resas-portal.go.jp/terms.html)を確認してください
+([API詳細仕様](https://opendata.resas-portal.go.jp/docs/api/v1/detail/index.html))．
 
     power_for_industry <- resas(X_API_KEY = "Your X-API-KEY", 
                                 "https://opendata.resas-portal.go.jp/docs/api/v1/industry/power/forIndustry.html")
@@ -135,20 +136,10 @@ power_for_industry <- power_for_industry |>
 knitr::kable(power_for_industry)
 ```
 
-<table class="kable_wrapper">
-<tbody>
-<tr>
-<td>
-
 | pref_name | pref_code | sic_code | sic_name   | data/simc_code | data/simc_name | data/value | data/employee | data/labor |
 |:----------|----------:|:---------|:-----------|:---------------|:---------------|-----------:|--------------:|-----------:|
 | 北海道    |         1 | A        | 農業，林業 | 01             | 農業           |     4.4697 |        3.2743 |     0.9858 |
 | 北海道    |         1 | A        | 農業，林業 | 02             | 林業           |     6.1208 |        3.0613 |     1.4438 |
-
-</td>
-</tr>
-</tbody>
-</table>
 
 ## 不動産取引価格情報取得API
 
