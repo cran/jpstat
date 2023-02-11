@@ -73,27 +73,27 @@ estat <- function(appId,
     purrr::chuck("TABLE_INF") |>
     tibble::enframe() |>
     dplyr::mutate(value = .data$value |>
-                    purrr::map_chr(~ {
-                      .x |>
-                        paste0(collapse = " ")
+                    purrr::map_chr(\(x) {
+                      x |>
+                        stringr::str_c(collapse = " ")
                     }))
 
   meta_info <- tibble::tibble(meta_info = meta_info |>
                                 purrr::chuck("CLASS_INF", "CLASS_OBJ")) |>
     tidyr::unnest_wider("meta_info") |>
-    dplyr::rename_with(~ {
-      .x |>
+    dplyr::rename_with(\(x) {
+      x |>
         stringr::str_remove("^@")
     }) |>
     dplyr::rename(key = "id",
                   key_name = "name",
                   value = "CLASS") |>
     dplyr::mutate(value = .data$value |>
-                    purrr::modify(~ {
-                      .x |>
+                    purrr::modify(\(x) {
+                      x |>
                         dplyr::bind_rows() |>
-                        dplyr::rename_with(~ {
-                          .x |>
+                        dplyr::rename_with(\(x) {
+                          x |>
                             stringr::str_remove("^@")
                         }) |>
                         tibble::rowid_to_column(".estat_rowid") |>
@@ -102,7 +102,7 @@ estat <- function(appId,
                                                    class = "tbl_estat")
                     }),
                   codes = .data$value |>
-                    purrr::modify(~ .x$code),
+                    purrr::modify(\(x) x$code),
                   width_key_name = .data$key_name |>
                     pillar::get_max_extent())
 
@@ -142,7 +142,7 @@ collect.estat <- function(x,
                           n = "n",
                           names_sep = "_",
                           query = list(),
-                          limit = 1e5, ...) {
+                          limit = 100000L, ...) {
   setup <- attr(x, "setup")
   setup$query <- estat_query(x, query)
 
@@ -156,26 +156,24 @@ collect.estat <- function(x,
     data <- tibble::new_tibble(data)
   } else {
     start <- seq(1, total, limit)
-    pb <- progress::progress_bar$new(format = format_downloading,
-                                     total = vctrs::vec_size(start))
-    data <- purrr::map_dfr(start,
-                           function(start) {
-                             out <- estat_collect(setup = setup,
-                                                  start = start,
-                                                  limit = limit,
-                                                  n = n)
-                             pb$tick()
-                             out
-                           })
+    data <- purrr::map(start,
+                       function(start) {
+                         estat_collect(setup = setup,
+                                       start = start,
+                                       limit = limit,
+                                       n = n)
+                       },
+                       .progress = TRUE) |>
+      purrr::list_rbind()
   }
 
   cols <- list(x$key, x$value, query_name, attr(x, "codes")) |>
     purrr::pmap(function(key, value, query_name, codes) {
       value |>
         tibble::as_tibble() |>
-        dplyr::rename_with(~ {
-          paste(key, .x,
-                sep = names_sep)
+        dplyr::rename_with(\(x) {
+          stringr::str_c(key, x,
+                         sep = names_sep)
         },
         !".estat_rowid") |>
         dplyr::mutate(!!query_name := codes[.data$.estat_rowid],
@@ -204,7 +202,7 @@ estat_query <- function(x, query) {
   query_name <- x |>
     attr("query_name") |>
     stringr::str_to_sentence()
-  query_name <- paste0("cd", query_name)
+  query_name <- stringr::str_c("cd", query_name)
 
   query_codes <- purrr::map2(x$value, attr(x, "codes"),
                              function(value, codes) {
@@ -213,8 +211,8 @@ estat_query <- function(x, query) {
                                if (size == vec_size(codes)) {
                                  NULL
                                } else {
-                                 paste0(codes[value$.estat_rowid],
-                                        collapse = ",")
+                                 stringr::str_c(codes[value$.estat_rowid],
+                                                collapse = ",")
                                }
                              })
   names(query_codes) <- query_name
@@ -251,8 +249,10 @@ estat_collect <- function(setup, start, limit, n) {
     estat_check_status() |>
     purrr::chuck("STATISTICAL_DATA", "DATA_INF", "VALUE") |>
     dplyr::bind_rows() |>
-    dplyr::rename_with(~ .x |>
-                         stringr::str_remove("^@")) |>
+    dplyr::rename_with(\(x) {
+      x |>
+        stringr::str_remove("^@")
+    } ) |>
     dplyr::rename(!!n := "$") |>
     dplyr::select(!dplyr::any_of("unit"))
 }
@@ -263,7 +263,7 @@ estat_collect <- function(setup, start, limit, n) {
 obj_sum.tbl_estat <- function(x) {
   attrs <- attributes(x)
   nms <- setdiff(names(x), ".estat_rowid")
-  paste0(pillar::align(attrs$key_name, attrs$width_key_name), " ",
-         "[", big_mark(vec_size(x)), "] ",
-         "<", commas(nms), ">")
+  stringr::str_c(pillar::align(attrs$key_name, attrs$width_key_name), " ",
+                 "[", big_mark(vec_size(x)), "] ",
+                 "<", commas(nms), ">")
 }

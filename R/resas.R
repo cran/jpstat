@@ -13,6 +13,8 @@ resas_docs <- function(setup) {
 
 #' Access 'RESAS' data
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param X_API_KEY An 'X-API-KEY' of 'RESAS' API.
 #' @param path A 'RESAS' API path.
 #' @param query Additional queries.
@@ -82,7 +84,7 @@ obj_sum.resas_value <- function(x) {
     required <- ""
   }
 
-  paste0(pillar::align(description, width), ": ", commas(vec_data(x)), required)
+  stringr::str_c(pillar::align(description, width), ": ", commas(vec_data(x)), required)
 }
 
 #' @export
@@ -93,15 +95,15 @@ summary.resas <- function(object, ...) {
 resas_query <- function(x) {
   key <- x$attrs$key
   value <- x$value |>
-    purrr::map(~ {
-      .x <- .x |>
+    purrr::map(\(x) {
+      x <- x |>
         vec_data() |>
         commas0()
 
-      if (.x == "") {
+      if (x == "") {
         return(character())
       } else {
-        return(.x)
+        return(x)
       }
     }) |>
     set_names(key)
@@ -211,9 +213,9 @@ resas_flatten <- function(x, args) {
 }
 
 resas_unpack <- function(x, args) {
-  cols <- vec_as_location(purrr::map_lgl(x, is.data.frame), ncol(x))
+  cols <- unname(vec_as_location(purrr::map_lgl(x, is.data.frame), ncol(x)))
   x |>
-    tidyr::unpack(cols,
+    tidyr::unpack(!!cols,
                   names_sep = args$names_sep)
 }
 
