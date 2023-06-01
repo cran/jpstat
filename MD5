@@ -1,7 +1,7 @@
-fa472e573f8a2d0803a62f57a67d7797 *DESCRIPTION
+4e5e677a4485f7e26acc65d3067cb61f *DESCRIPTION
 4f70173c9bca1e0eaed9a5c2bec7006d *LICENSE
 855f4becf5b21df0d7d2cebfe65850eb *NAMESPACE
-7ceb6d32e5e8595f390d6b167bfb8750 *NEWS.md
+ae1cd0a36a00cceb8d742939229604f4 *NEWS.md
 b558ef75550fa1227123a39fa8a7de51 *R/deprecated.R
 8bd53e0d3a5b0363e6dacc45caf8b27e *R/estat.R
 a0f2eef8d50ddf3f8d6d38148102c8c6 *R/jpstat-package.R
@@ -14,7 +14,7 @@ a0298f8f953327049f0599100f67d16d *R/sysdata.rda
 808609042dd516413ac0380f68d48f83 *README.md
 ccf1ac9409d496c9a734dcb7e5a11a23 *man/estat.Rd
 5847d7ffb7b7b99a3b48c72ba303f79e *man/estat_table_info.Rd
-c5a94a7de67ddce889efebbd4f7225f7 *man/figures/logo.png
+ec33ef9ee1c46dc3a59da8afbbae6cc3 *man/figures/logo.png
 a976ca3ba9a11553cec6184d686e9142 *man/jpstat.Rd
 e715f451b46efff330e15f53026ddcdd *man/reexports.Rd
 b63f446d91dcfe0fd934bc568d170369 *man/resas.Rd
@@ -22,4 +22,4 @@ b63f446d91dcfe0fd934bc568d170369 *man/resas.Rd
 3e2c57f744c66109fa5a265338673dc7 *tests/testthat.R
 a31dc3cff24d35252dbe4ca8cbea1c93 *tests/testthat/test-estat.R
 71a54c44fb0440d5698aaca79c3fe404 *tests/testthat/test-resas.R
-2098301cb19010805105ce6b3e12a1e0 *tests/testthat/test-webland.R
+a6cfde880bf15dc0cddc2b34ccbc9bd9 *tests/testthat/test-webland.R

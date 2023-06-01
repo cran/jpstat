@@ -1,7 +1,7 @@
 Package: jpstat
 Type: Package
 Title: Tools for Easy Use of 'e-Stat', 'RESAS' API, Etc
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: person("Mizuki", "Uchida", email = "uchidamizuki@vivaldi.net", role = c("aut", "cre"))
 Description: Provides tools to use API such as 'e-Stat' (<https://www.e-stat.go.jp/>), 
     the portal site for Japanese government statistics, and 
@@ -19,8 +19,8 @@ Imports: dplyr (>= 0.8.0), httr, pillar, purrr (>= 1.0.0), rlang (>=
         1.0.0), vctrs, navigatr (>= 0.2.0), lifecycle, stickyr
 Depends: R (>= 4.1.0)
 NeedsCompilation: no
-Packaged: 2023-02-11 10:08:30 UTC; Mizuki
+Packaged: 2023-06-01 12:02:27 UTC; Mizuki
 Author: Mizuki Uchida [aut, cre]
 Maintainer: Mizuki Uchida <uchidamizuki@vivaldi.net>
 Repository: CRAN
-Date/Publication: 2023-02-11 10:30:02 UTC
+Date/Publication: 2023-06-01 22:50:11 UTC
