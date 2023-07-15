@@ -1,12 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# jpstat <a href="https://uchidamizuki.github.io/jpstat/"><img src="man/figures/logo.png" align="right" height="139" /></a>
+# jpstat <a href="https://uchidamizuki.github.io/jpstat/"><img src="man/figures/logo.png" align="right" height="139"/></a>
 
 <!-- badges: start -->
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/jpstat)](https://CRAN.R-project.org/package=jpstat)
+
 <!-- badges: end -->
 
 **README is currently only available in Japanese.**
@@ -53,9 +54,11 @@ e-Stat APIの利用にはアカウント登録 (appIdと呼ばれるAPIキーの
 2010・2015年の東京都・大阪府における男女別人口を取得します．
 詳細な使用方法は[こちら](https://github.com/uchidamizuki/jpstat/blob/main/README-estat.md)を参照してください．
 
+    # APIキーの設定
+    Sys.setenv(ESTAT_API_KEY = "Your appId")
+
     # メタ情報の取得
-    census <- estat(appId = "Your appId", 
-                    statsDataId = "https://www.e-stat.go.jp/dbview?sid=0003410379")
+    census <- estat(statsDataId = "https://www.e-stat.go.jp/dbview?sid=0003410379")
     census
 
     #> # ☐ tab:   表章項目         [2] <code, name, level, unit>
@@ -117,8 +120,9 @@ RESAS
 APIの利用にあたっては，[利用規約](https://opendata.resas-portal.go.jp/terms.html)を確認してください
 ([API詳細仕様](https://opendata.resas-portal.go.jp/docs/api/v1/detail/index.html))．
 
-    power_for_industry <- resas(X_API_KEY = "Your X-API-KEY", 
-                                "https://opendata.resas-portal.go.jp/docs/api/v1/industry/power/forIndustry.html")
+    Sys.setenv(RESAS_API_KEY = "Your X-API-KEY")
+
+    power_for_industry <- resas(path = "https://opendata.resas-portal.go.jp/docs/api/v1/industry/power/forIndustry.html")
     power_for_industry
 
     #> # ✖ year:      年度            :  (Required)
@@ -178,3 +182,9 @@ knitr::kable(trade[1:5, 1:6])
 | 中古マンション等 | 01101     | 北海道    | 札幌市中央区 | 大通西        | 10000000    |
 | 中古マンション等 | 01101     | 北海道    | 札幌市中央区 | 大通西        | 9000000     |
 | 中古マンション等 | 01101     | 北海道    | 札幌市中央区 | 大通西        | 3000000     |
+
+## 参考リンク
+
+- [Rで日本の統計データを効率的に取得しよう（e-Stat
+  APIとjpstatパッケージで）](https://uchidamizuki.quarto.pub/blog/posts/2022/12/call-e-stat-api-in-r.html)
+- [Rで人口ピラミッドのアニメーションを作る](https://uchidamizuki.quarto.pub/blog/posts/2023/01/create-an-animation-of-a-population-pyramid-in-r.html)
